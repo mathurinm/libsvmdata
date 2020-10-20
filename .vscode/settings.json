@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "**/*.pyc": true,
+        "libsvmdata.egg-info/*": true
+    }
+}
