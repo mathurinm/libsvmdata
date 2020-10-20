@@ -1,0 +1,15 @@
+include *.rst
+include *.md
+include *.in
+include LICENSE
+include libsvmdata/__init__.py
+include requirements.txt
+
+recursive-include libsvmdata *.py
+
+### Exclude
+
+exclude .coveragerc
+exclude *.yml
+recursive-exclude libsvmdata *.pyc
+
