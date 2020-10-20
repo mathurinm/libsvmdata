@@ -18,7 +18,7 @@ install:
   - pip install -e .
 script:
   - check-manifest
-  - pytest -lv --cov-report term-missing libsvmdata --cov=libsvm --cov-config .coveragerc
+  - pytest -lv --cov-report term-missing libsvmdata --cov=libsvmdata --cov-config .coveragerc
   - flake8 --count libsvmdata
 after_success:
   - codecov
