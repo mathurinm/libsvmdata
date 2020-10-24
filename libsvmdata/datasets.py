@@ -49,7 +49,7 @@ def download_libsvm(dataset, destination, replace=False):
     return path
 
 
-def get_X_y(dataset, compressed_path, multilabel, replace=False):
+def _get_X_y(dataset, compressed_path, multilabel, replace=False):
     """Load a LIBSVM dataset as sparse X and observation y/Y.
     If X and y already exists as npz and npy, they are not redownloaded unless
     replace=True."""
@@ -147,7 +147,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
     compressed_path = pjoin(LIBSVMDATA_PATH, "%s.bz2" % NAMES[dataset])
     download_libsvm(dataset, compressed_path, replace=replace)
 
-    X, y = get_X_y(dataset, compressed_path, multilabel, replace=replace)
+    X, y = _get_X_y(dataset, compressed_path, multilabel, replace=replace)
 
     # preprocessing
     if min_nnz != 0:

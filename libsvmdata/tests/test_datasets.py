@@ -1,8 +1,11 @@
 import numpy as np
+import pytest
 
 from libsvmdata import fetch_libsvm
+from libsvmdata.datasets import NAMES
 
 
-def test_news20():
-    X, y = fetch_libsvm('news20')
+@pytest.mark.parametrize("name", NAMES.keys())
+def test_datasets(name):
+    X, y = fetch_libsvm(name)
     np.testing.assert_equal(X.shape[0], y.shape[0])
