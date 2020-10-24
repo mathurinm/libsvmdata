@@ -90,7 +90,10 @@ def _get_X_y(dataset, compressed_path, multilabel, replace=False):
 
     else:
         X = sparse.load_npz(X_path)
-        y = np.load(y_path)
+        if multilabel:
+            y = sparse.load_npz(y_path)
+        else:
+            y = np.load(y_path)
 
     return X, y
 
