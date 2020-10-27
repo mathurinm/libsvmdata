@@ -53,7 +53,7 @@ def download_libsvm(dataset, destination, replace=False):
     return path
 
 
-def _get_X_y(dataset, source_path, multilabel, replace=False):
+def _get_X_y(dataset, multilabel, replace=False):
     """Load a LIBSVM dataset as sparse X and observation y/Y.
     If X and y already exists as npz and npy, they are not redownloaded unless
     replace=True."""
@@ -67,8 +67,14 @@ def _get_X_y(dataset, source_path, multilabel, replace=False):
     ext = '.npz' if multilabel else '.npy'
     y_path = LIBSVMDATA_PATH / f"{stripped_name}_target{ext}"
     X_path = LIBSVMDATA_PATH / f"{stripped_name}_data.npz"
-    if replace or not y_path.is_file() or not X_path.is_file():
+    if replace or not y_path.exists() or not X_path.exists():
         tmp_path = LIBSVMDATA_PATH / stripped_name
+
+        # Download the dataset
+        source_path = LIBSVMDATA_PATH / NAMES[dataset]
+        if not source_path.parent.exists():
+            source_path.parent.mkdir(parents=True)
+        download_libsvm(dataset, source_path, replace=replace)
 
         # decompress file only if it is compressed
         if NAMES[dataset].endswith('.bz2'):
@@ -77,6 +83,7 @@ def _get_X_y(dataset, source_path, multilabel, replace=False):
             with open(tmp_path, "wb") as f, open(source_path, "rb") as g:
                 for data in iter(lambda: g.read(100 * 1024), b''):
                     f.write(decompressor.decompress(data))
+            source_path.unlink()
 
         n_features_total = N_FEATURES[dataset]
         print("Loading svmlight file...")
@@ -145,22 +152,13 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
     https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
 
     """
-    paths = [LIBSVMDATA_PATH / 'regression', LIBSVMDATA_PATH / 'binary',
-             LIBSVMDATA_PATH / 'multilabel', LIBSVMDATA_PATH / 'multiclass']
-    for path in paths:
-        if not path.exists():
-            path.mkdir(parents=True)
-
     if dataset not in NAMES:
         raise ValueError("Unsupported dataset %s" % dataset)
     multilabel = NAMES[dataset].split('/')[0] == 'multilabel'
     is_regression = NAMES[dataset].split('/')[0] == 'regression'
 
     print("Dataset: %s" % dataset)
-    destination_path = str(LIBSVMDATA_PATH / NAMES[dataset])
-    download_libsvm(dataset, destination_path, replace=replace)
-
-    X, y = _get_X_y(dataset, destination_path, multilabel, replace=replace)
+    X, y = _get_X_y(dataset, multilabel, replace=replace)
 
     # preprocessing
     if min_nnz != 0:
