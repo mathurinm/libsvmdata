@@ -4,12 +4,14 @@ A python util to fetch datasets from the LIBSVM website.
 
 
 Getting design matrix is as easy as:
-```
-from  import fetch_libsvm
-X, y = fetch_libsvm("news20")
-```
 
-Currently supported datasets are in `.datasets.NAMES.keys()`.
+::
+
+    from libsvmdata import fetch_libsvm
+    X, y = fetch_libsvm("news20")
+
+
+Currently supported datasets are in `libsvmdata.datasets.NAMES.keys()`.
 
 
 .. |image0| image:: https://travis-ci.com/mathurinm/libsvmdata.svg?branch=master
