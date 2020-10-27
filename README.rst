@@ -11,7 +11,7 @@ Getting design matrix is as easy as:
     X, y = fetch_libsvm("news20")
 
 
-Currently supported datasets are in `libsvmdata.datasets.NAMES.keys()`.
+Currently supported datasets are in ``libsvmdata.datasets.NAMES.keys()``.
 
 
 .. |image0| image:: https://travis-ci.com/mathurinm/libsvmdata.svg?branch=master
