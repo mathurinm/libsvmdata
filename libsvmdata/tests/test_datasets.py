@@ -1,4 +1,3 @@
-import pytest
 import numpy as np
 
 from libsvmdata import fetch_libsvm
