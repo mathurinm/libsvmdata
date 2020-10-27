@@ -11,7 +11,7 @@ from sklearn import preprocessing
 from sklearn.datasets import load_svmlight_file
 
 # TODO make it customizable by the user
-LIBSVMDATA_PATH = Path.home() / '.data' / 'libsvm'
+LIBSVMDATA_PATH = Path.home() / 'data' / 'libsvm'
 
 
 NAMES = {
@@ -86,6 +86,7 @@ def _get_X_y(dataset, multilabel, replace=False):
             source_path.unlink()
 
         n_features_total = N_FEATURES[dataset]
+
         print("Loading svmlight file...")
         with open(tmp_path, 'rb') as f:
             X, y = load_svmlight_file(
