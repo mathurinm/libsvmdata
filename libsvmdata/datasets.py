@@ -1,6 +1,6 @@
 # Author: Mathurin Massias <mathurin.massias@gmail.com>
 # License: BSD 3 clause
-
+import os
 from pathlib import Path
 from bz2 import BZ2Decompressor
 
@@ -9,9 +9,6 @@ from scipy import sparse
 from download import download
 from sklearn import preprocessing
 from sklearn.datasets import load_svmlight_file
-
-# TODO make it customizable by the user
-LIBSVMDATA_PATH = Path.home() / 'data' / 'libsvm'
 
 
 NAMES = {
@@ -43,6 +40,23 @@ N_FEATURES = {
     'url': 3231961,
     'webspam': 16609143,
 }
+
+
+# LIBSVMDATA_PATH is determine using environment variables.
+# The top priority is LIBSVM_DATA_HOME which is specific to this package.
+# If XDG_DATA_HOME is set, the data will be put in a subfolder 'libsvm'.
+# Finally, the default value is set to $HOME/libsvm_data.
+def get_data_home():
+    data_home = os.environ.get(
+        'LIBSVM_DATA_HOME', os.environ.get('XDG_DATA_HOME', None)
+    )
+    if data_home is not None:
+        return Path(data_home) / 'libsvm'
+    else:
+        return Path.home() / 'libsvm_data'
+
+
+LIBSVMDATA_PATH = get_data_home()
 
 
 def download_libsvm(dataset, destination, replace=False):
