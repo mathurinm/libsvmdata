@@ -42,18 +42,19 @@ N_FEATURES = {
 }
 
 
-# LIBSVMDATA_PATH is determine using environment variables.
-# The top priority is LIBSVM_DATA_HOME which is specific to this package.
-# If XDG_DATA_HOME is set, the data will be put in a subfolder 'libsvm'.
-# Finally, the default value is set to $HOME/libsvm_data.
+# LIBSVMDATA_PATH is determined using environment variables.
+# The top priority is LIBSVMDATA_HOME which is specific to this package.
+# Else, it falls back on XDG_DATA_HOME if it is set.
+# Finally, the default data directory is $HOME/data.
+# The data will be put in a subfolder 'libsvm'
 def get_data_home():
     data_home = os.environ.get(
-        'LIBSVM_DATA_HOME', os.environ.get('XDG_DATA_HOME', None)
+        'LIBSVMDATA_HOME', os.environ.get('XDG_DATA_HOME', None)
     )
-    if data_home is not None:
-        return Path(data_home) / 'libsvm'
-    else:
-        return Path.home() / 'libsvm_data'
+    if data_home is None:
+        data_home = Path.home() / 'data'
+
+    return Path(data_home) / 'libsvm'
 
 
 LIBSVMDATA_PATH = get_data_home()
