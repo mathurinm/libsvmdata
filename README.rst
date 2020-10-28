@@ -3,7 +3,7 @@
 A python util to fetch datasets from the LIBSVM website.
 
 
-Getting design matrix is as easy as:
+Getting design matrix and target variable is as easy as:
 
 ::
 
@@ -12,6 +12,16 @@ Getting design matrix is as easy as:
 
 
 Currently supported datasets are in ``libsvmdata.datasets.NAMES.keys()``.
+
+
+The datasets are saved in a subfolder ``libsvm`` inside ``libsvmdata.datasets.DATA_HOME``, whose value is:
+
+- the environment variable LIBSVMDATA_HOME if it exists,
+
+- else, the environment variable XDG_DATA_HOME if it exists,
+
+- else, $HOME/data.
+
 
 
 .. |image0| image:: https://travis-ci.com/mathurinm/libsvmdata.svg?branch=master
