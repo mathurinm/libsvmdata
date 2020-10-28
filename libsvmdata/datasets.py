@@ -1,19 +1,14 @@
 # Author: Mathurin Massias <mathurin.massias@gmail.com>
 # License: BSD 3 clause
-
 import os
 from pathlib import Path
 from bz2 import BZ2Decompressor
-from os.path import join as pjoin
 
 import numpy as np
 from scipy import sparse
 from download import download
 from sklearn import preprocessing
 from sklearn.datasets import load_svmlight_file
-
-# TODO make it customizable by the user
-LIBSVMDATA_PATH = pjoin(str(Path.home()), 'libsvm_data/')
 
 
 NAMES = {
@@ -47,6 +42,25 @@ N_FEATURES = {
 }
 
 
+# DATA_HOME is determined using environment variables.
+# The top priority is the environment variable $LIBSVMDATA_HOME which is
+# specific to this package.
+# Else, it falls back on XDG_DATA_HOME if it is set.
+# Finally, it defaults to $HOME/data.
+# The data will be put in a subfolder 'libsvm'
+def get_data_home():
+    data_home = os.environ.get(
+        'LIBSVMDATA_HOME', os.environ.get('XDG_DATA_HOME', None)
+    )
+    if data_home is None:
+        data_home = Path.home() / 'data'
+
+    return Path(data_home) / 'libsvm'
+
+
+DATA_HOME = get_data_home()
+
+
 def download_libsvm(dataset, destination, replace=False):
     """Download a dataset from LIBSVM website."""
     url = ("https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/" +
@@ -55,7 +69,7 @@ def download_libsvm(dataset, destination, replace=False):
     return path
 
 
-def _get_X_y(dataset, source_path, multilabel, replace=False):
+def _get_X_y(dataset, multilabel, replace=False):
     """Load a LIBSVM dataset as sparse X and observation y/Y.
     If X and y already exists as npz and npy, they are not redownloaded unless
     replace=True."""
@@ -67,10 +81,16 @@ def _get_X_y(dataset, source_path, multilabel, replace=False):
         stripped_name = NAMES[dataset]
 
     ext = '.npz' if multilabel else '.npy'
-    y_path = pjoin(LIBSVMDATA_PATH, "%s_target%s" % (stripped_name, ext))
-    X_path = pjoin(LIBSVMDATA_PATH, "%s_data.npz" % stripped_name)
-    if replace or not os.path.isfile(y_path) or not os.path.isfile(X_path):
-        tmp_path = pjoin(LIBSVMDATA_PATH, "%s" % stripped_name)
+    y_path = DATA_HOME / f"{stripped_name}_target{ext}"
+    X_path = DATA_HOME / f"{stripped_name}_data.npz"
+    if replace or not y_path.exists() or not X_path.exists():
+        tmp_path = DATA_HOME / stripped_name
+
+        # Download the dataset
+        source_path = DATA_HOME / NAMES[dataset]
+        if not source_path.parent.exists():
+            source_path.parent.mkdir(parents=True)
+        download_libsvm(dataset, source_path, replace=replace)
 
         # decompress file only if it is compressed
         if NAMES[dataset].endswith('.bz2'):
@@ -79,14 +99,16 @@ def _get_X_y(dataset, source_path, multilabel, replace=False):
             with open(tmp_path, "wb") as f, open(source_path, "rb") as g:
                 for data in iter(lambda: g.read(100 * 1024), b''):
                     f.write(decompressor.decompress(data))
+            source_path.unlink()
 
         n_features_total = N_FEATURES[dataset]
+
         print("Loading svmlight file...")
         with open(tmp_path, 'rb') as f:
             X, y = load_svmlight_file(
                 f, n_features=n_features_total, multilabel=multilabel)
 
-        os.remove(tmp_path)
+        tmp_path.unlink()
         X = sparse.csc_matrix(X)
         X.sort_indices()
         sparse.save_npz(X_path, X)
@@ -147,24 +169,13 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
     https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
 
     """
-    paths = [LIBSVMDATA_PATH, pjoin(LIBSVMDATA_PATH, 'regression'),
-             pjoin(LIBSVMDATA_PATH, 'binary'),
-             pjoin(LIBSVMDATA_PATH, 'multilabel'),
-             pjoin(LIBSVMDATA_PATH, 'multiclass')]
-    for path in paths:
-        if not os.path.exists(path):
-            os.mkdir(path)
-
     if dataset not in NAMES:
         raise ValueError("Unsupported dataset %s" % dataset)
     multilabel = NAMES[dataset].split('/')[0] == 'multilabel'
     is_regression = NAMES[dataset].split('/')[0] == 'regression'
 
     print("Dataset: %s" % dataset)
-    destination_path = pjoin(LIBSVMDATA_PATH, NAMES[dataset])
-    download_libsvm(dataset, destination_path, replace=replace)
-
-    X, y = _get_X_y(dataset, destination_path, multilabel, replace=replace)
+    X, y = _get_X_y(dataset, multilabel, replace=replace)
 
     # preprocessing
     if min_nnz != 0:
@@ -181,5 +192,5 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
 
 if __name__ == "__main__":
     for dataset in NAMES:
-        if not dataset.startswith("sector"):
+        if not dataset.startswith("sector") and not dataset == "webspam":
             fetch_libsvm(dataset, replace=False)
