@@ -42,8 +42,9 @@ N_FEATURES = {
 }
 
 
-# LIBSVMDATA_PATH is determined using environment variables.
-# The top priority is LIBSVMDATA_HOME which is specific to this package.
+# DATA_HOME is determined using environment variables.
+# The top priority is the environment variable $LIBSVMDATA_HOME which is
+# specific to this package.
 # Else, it falls back on XDG_DATA_HOME if it is set.
 # Finally, it defaults to $HOME/data.
 # The data will be put in a subfolder 'libsvm'
@@ -57,7 +58,7 @@ def get_data_home():
     return Path(data_home) / 'libsvm'
 
 
-LIBSVMDATA_PATH = get_data_home()
+DATA_HOME = get_data_home()
 
 
 def download_libsvm(dataset, destination, replace=False):
@@ -80,13 +81,13 @@ def _get_X_y(dataset, multilabel, replace=False):
         stripped_name = NAMES[dataset]
 
     ext = '.npz' if multilabel else '.npy'
-    y_path = LIBSVMDATA_PATH / f"{stripped_name}_target{ext}"
-    X_path = LIBSVMDATA_PATH / f"{stripped_name}_data.npz"
+    y_path = DATA_HOME / f"{stripped_name}_target{ext}"
+    X_path = DATA_HOME / f"{stripped_name}_data.npz"
     if replace or not y_path.exists() or not X_path.exists():
-        tmp_path = LIBSVMDATA_PATH / stripped_name
+        tmp_path = DATA_HOME / stripped_name
 
         # Download the dataset
-        source_path = LIBSVMDATA_PATH / NAMES[dataset]
+        source_path = DATA_HOME / NAMES[dataset]
         if not source_path.parent.exists():
             source_path.parent.mkdir(parents=True)
         download_libsvm(dataset, source_path, replace=replace)
@@ -191,5 +192,5 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
 
 if __name__ == "__main__":
     for dataset in NAMES:
-        if not dataset.startswith("sector"):
+        if not dataset.startswith("sector") and not dataset == "webspam":
             fetch_libsvm(dataset, replace=False)
