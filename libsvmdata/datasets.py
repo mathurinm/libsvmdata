@@ -12,10 +12,15 @@ from sklearn.datasets import load_svmlight_file
 
 
 NAMES = {
+    'aloi': 'multiclass/aloi.bz2',
     'bodyfat': 'regression/bodyfat',
+    'connect-4': 'multiclass/connect-4',
+    'dna': 'multiclass/dna.scale',
+    'glass': 'multiclass/glass.scale',
     'finance': 'regression/log1p.E2006.train.bz2',
     'iris': 'multiclass/iris.scale',
     'kdda_train': 'binary/kdda.bz2',
+    'letter': 'multiclass/letter.scale',
     'mnist': 'multiclass/mnist.bz2',
     'news20': 'binary/news20.binary.bz2',
     'protein': 'multiclass/protein.bz2',
@@ -31,10 +36,15 @@ NAMES = {
 }
 
 N_FEATURES = {
+    'aloi': 128,
     'bodyfat': 14,
-    'finance': 4272227,
+    'connect-4': 126,
+    'dna': 180,
+    'finance': 4_272_227,
+    'glass': 9,
     'iris': 4,
     'kdda_train': 20216830,
+    'letter': 16,
     'mnist': 780,
     'news20': 1355191,
     'protein': 357,
