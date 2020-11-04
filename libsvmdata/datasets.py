@@ -12,12 +12,19 @@ from sklearn.datasets import load_svmlight_file
 
 
 NAMES = {
+    'aloi': 'multiclass/aloi.bz2',
     'bodyfat': 'regression/bodyfat',
+    'connect-4': 'multiclass/connect-4',
+    'dna': 'multiclass/dna.scale',
+    'glass': 'multiclass/glass.scale',
     'finance': 'regression/log1p.E2006.train.bz2',
     'iris': 'multiclass/iris.scale',
     'kdda_train': 'binary/kdda.bz2',
+    'letter': 'multiclass/letter.scale',
     'mnist': 'multiclass/mnist.bz2',
     'news20': 'binary/news20.binary.bz2',
+    'news20_multiclass': 'multiclass/news20.bz2',
+    # 'protein': 'multiclass/protein.bz2',
     'rcv1_multiclass': 'multiclass/rcv1_train.multiclass.bz2',
     'rcv1_topics_test': 'multilabel/rcv1_topics_test_2.svm.bz2',
     'rcv1_train': 'binary/rcv1_train.binary.bz2',
@@ -30,21 +37,28 @@ NAMES = {
 }
 
 N_FEATURES = {
+    'aloi': 128,
     'bodyfat': 14,
-    'finance': 4272227,
+    'connect-4': 126,
+    'dna': 180,
+    'finance': 4_272_227,
+    'glass': 9,
     'iris': 4,
-    'kdda_train': 20216830,
+    'kdda_train': 20_216_830,
+    'letter': 16,
     'mnist': 780,
-    'news20': 1355191,
+    'news20': 1_355_191,
+    'news20_multiclass': 62_061,
+    # 'protein': 357,
     'rcv1_multiclass': 47_236,
-    'rcv1_topics_test': 47236,
-    'rcv1_train': 47236,
-    'real-sim': 20958,
-    'sector_train': 55197,
-    'sector_test': 55197,
+    'rcv1_topics_test': 47_236,
+    'rcv1_train': 47_236,
+    'real-sim': 20_958,
+    'sector_train': 55_197,
+    'sector_test': 55_197,
     'smallNORB': 18_432,
-    'url': 3231961,
-    'webspam': 16609143,
+    'url': 3_231_961,
+    'webspam': 16_609_143,
 }
 
 
