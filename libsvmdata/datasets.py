@@ -15,6 +15,7 @@ NAMES = {
     'aloi': 'multiclass/aloi.bz2',
     'bodyfat': 'regression/bodyfat',
     'connect-4': 'multiclass/connect-4',
+    'covtype': 'binary/covtype.libsvm.binary.bz2',
     'dna': 'multiclass/dna.scale',
     'eunite2001': 'regression/eunite2001',
     'finance': 'regression/log1p.E2006.train.bz2',
@@ -22,6 +23,7 @@ NAMES = {
     'glass': 'multiclass/glass.scale',
     'housing': 'regression/housing',
     'iris': 'multiclass/iris.scale',
+    'gisette': 'binary/gisette_scale.bz2',
     'kdda_train': 'binary/kdda.bz2',
     'letter': 'multiclass/letter.scale',
     'mnist': 'multiclass/mnist.bz2',
@@ -33,19 +35,24 @@ NAMES = {
     'rcv1_train': 'binary/rcv1_train.binary.bz2',
     'real-sim': 'binary/real-sim.bz2',
     'sector_train': 'multiclass/sector/sector.bz2',
+    'sector_scale': 'multiclass/sector/sector.scale.bz2',
     'sector_test': 'multiclass/sector/sector.t.bz2',
     'smallNORB': 'multiclass/smallNORB.bz2',
     'url': 'binary/url_combined.bz2',
     'webspam': 'binary/webspam_wc_normalized_trigram.svm.bz2',
+    'usps': 'multiclass/usps.bz2',
+    'sensit': 'multiclass/vehicle/combined.bz2'
 }
 
 N_FEATURES = {
     'aloi': 128,
     'bodyfat': 14,
     'connect-4': 126,
+    'covtype': 54,
     'dna': 180,
     'eunite2001': 16,
     'finance': 4_272_227,
+    'gisette': 5000,
     'finance-tf-idf': 150_360,
     'glass': 9,
     'housing': 13,
@@ -65,6 +72,9 @@ N_FEATURES = {
     'smallNORB': 18_432,
     'url': 3_231_961,
     'webspam': 16_609_143,
+    'usps': 7_291,
+    'sensit': 100,
+    'sector_scale': 55_197
 }
 
 
