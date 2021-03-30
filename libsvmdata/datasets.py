@@ -20,10 +20,10 @@ NAMES = {
     'eunite2001': 'regression/eunite2001',
     'finance': 'regression/log1p.E2006.train.bz2',
     'finance-tf-idf': 'regression/E2006.train.bz2',
+    'gisette': 'binary/gisette_scale.bz2',
     'glass': 'multiclass/glass.scale',
     'housing': 'regression/housing',
     'iris': 'multiclass/iris.scale',
-    'gisette': 'binary/gisette_scale.bz2',
     'kdda_train': 'binary/kdda.bz2',
     'letter': 'multiclass/letter.scale',
     'mnist': 'multiclass/mnist.bz2',
@@ -34,14 +34,14 @@ NAMES = {
     'rcv1_topics_test': 'multilabel/rcv1_topics_test_2.svm.bz2',
     'rcv1_train': 'binary/rcv1_train.binary.bz2',
     'real-sim': 'binary/real-sim.bz2',
-    'sector_train': 'multiclass/sector/sector.bz2',
     'sector_scale': 'multiclass/sector/sector.scale.bz2',
+    'sector_train': 'multiclass/sector/sector.bz2',
     'sector_test': 'multiclass/sector/sector.t.bz2',
+    'sensit': 'multiclass/vehicle/combined.bz2',
     'smallNORB': 'multiclass/smallNORB.bz2',
     'url': 'binary/url_combined.bz2',
-    'webspam': 'binary/webspam_wc_normalized_trigram.svm.bz2',
     'usps': 'multiclass/usps.bz2',
-    'sensit': 'multiclass/vehicle/combined.bz2'
+    'webspam': 'binary/webspam_wc_normalized_trigram.svm.bz2'
 }
 
 N_FEATURES = {
@@ -52,8 +52,8 @@ N_FEATURES = {
     'dna': 180,
     'eunite2001': 16,
     'finance': 4_272_227,
-    'gisette': 5000,
     'finance-tf-idf': 150_360,
+    'gisette': 5_000,
     'glass': 9,
     'housing': 13,
     'iris': 4,
@@ -67,14 +67,14 @@ N_FEATURES = {
     'rcv1_topics_test': 47_236,
     'rcv1_train': 47_236,
     'real-sim': 20_958,
+    'sector_scale': 55_197,
     'sector_train': 55_197,
     'sector_test': 55_197,
+    'sensit': 100,
     'smallNORB': 18_432,
     'url': 3_231_961,
-    'webspam': 16_609_143,
     'usps': 7_291,
-    'sensit': 100,
-    'sector_scale': 55_197
+    'webspam': 16_609_143,
 }
 
 
