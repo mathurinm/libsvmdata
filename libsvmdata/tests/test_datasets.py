@@ -39,3 +39,7 @@ def test_multiclass():
     X, y = fetch_libsvm("iris")
     np.testing.assert_equal(X.shape[0], y.shape[0])
     X, y = fetch_libsvm("iris")
+
+
+def test_wrong_dataset():
+    np.testing.assert_raises(ValueError, fetch_libsvm, "unknowndataset")
