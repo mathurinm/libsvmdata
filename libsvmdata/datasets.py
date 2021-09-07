@@ -367,7 +367,7 @@ def _get_X_y(dataset, multilabel, replace=False):
     return X, y
 
 
-def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
+def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
     """
     Download a dataset from LIBSVM website.
 
@@ -384,7 +384,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
         for a sparse matrix since centering is not performed.
         y is centered and set to unit norm if the dataset is a regression one.
 
-    min_nnz: int, default=3
+    min_nnz: int, default=0
         Columns of X with strictly less than min_nnz non-zero entries are
         discarded.
 
@@ -403,8 +403,8 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=3):
 
     """
     if dataset not in NAMES:
-        raise ValueError("Unsupported dataset %s, check libsvmdata.supported "
-                         "for the list of supported datasets" % dataset)
+        raise ValueError("Unsupported dataset %s. " % dataset +
+                         "Supported datasets are: \n- " + '\n- '.join(NAMES))
     multilabel = NAMES[dataset].split('/')[0] == 'multilabel'
     is_regression = NAMES[dataset].split('/')[0] == 'regression'
 
