@@ -15,10 +15,10 @@ from libsvmdata import fetch_libsvm
 
 def test_binary():
     # download if not present:
-    X, y = fetch_libsvm("news20")
+    X, y = fetch_libsvm("news20.binary")
     np.testing.assert_equal(X.shape[0], y.shape[0])
     # also checks that loading saved files works:
-    X, y = fetch_libsvm("news20")
+    X, y = fetch_libsvm("news20.binary")
 
 
 def test_multilabel():
