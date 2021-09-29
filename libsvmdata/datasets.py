@@ -316,9 +316,9 @@ def _get_X_y(dataset, multilabel, replace=False):
     ext = '.npz' if multilabel else '.npy'
     y_path = DATA_HOME / f"{stripped_name}_target{ext}"
     X_path = DATA_HOME / f"{stripped_name}_data"  # no ext to handle npy or npz
-    if (not y_path.exists()
-        or not ((X_path / '.npz').exists() or (X_path / '.npy').exists())
-            or replace):
+    if (replace or not y_path.exists()
+        or not (X_path.with_suffix('.npy').exists() or
+                X_path.with_suffix('.npz').exists())):
         tmp_path = DATA_HOME / stripped_name
 
         # Download the dataset
@@ -366,9 +366,9 @@ def _get_X_y(dataset, multilabel, replace=False):
 
     else:
         try:
-            X = sparse.load_npz(X_path / '.npz')
+            X = sparse.load_npz(X_path.with_suffix('.npz'))
         except FileNotFoundError:
-            X = np.load(X_path / '.npy')
+            X = np.load(X_path.with_suffix('.npy'))
 
         if multilabel:
             y = sparse.load_npz(y_path)
