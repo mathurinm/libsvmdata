@@ -315,8 +315,10 @@ def _get_X_y(dataset, multilabel, replace=False):
 
     ext = '.npz' if multilabel else '.npy'
     y_path = DATA_HOME / f"{stripped_name}_target{ext}"
-    X_path = DATA_HOME / f"{stripped_name}_data.npz"
-    if replace or not y_path.exists() or not X_path.exists():
+    X_path = DATA_HOME / f"{stripped_name}_data"  # no ext to handle npy or npz
+    if (not y_path.exists()
+        or not ((X_path / '.npz').exists() or (X_path / '.npy').exists())
+            or replace):
         tmp_path = DATA_HOME / stripped_name
 
         # Download the dataset
@@ -342,9 +344,14 @@ def _get_X_y(dataset, multilabel, replace=False):
                 f, n_features=n_features_total, multilabel=multilabel)
 
         tmp_path.unlink()
-        X = sparse.csc_matrix(X)
-        X.sort_indices()
-        sparse.save_npz(X_path, X)
+        # if X is dense, do not use it in sparse format:
+        if len(X.data) == X.shape[0] * X.shape[1]:
+            X = X.toarray(order='F')
+            np.save(X_path, X)
+        else:
+            X = sparse.csc_matrix(X)
+            X.sort_indices()
+            sparse.save_npz(X_path, X)
 
         if multilabel:
             indices = np.array([lab for labels in y for lab in labels])
@@ -358,7 +365,11 @@ def _get_X_y(dataset, multilabel, replace=False):
             np.save(y_path, y)
 
     else:
-        X = sparse.load_npz(X_path)
+        try:
+            X = sparse.load_npz(X_path / '.npz')
+        except FileNotFoundError:
+            X = np.load(X_path / '.npy')
+
         if multilabel:
             y = sparse.load_npz(y_path)
         else:
