@@ -8,10 +8,10 @@ Getting design matrix and target variable is as easy as:
 ::
 
     from libsvmdata import fetch_libsvm
-    X, y = fetch_libsvm("news20")
+    X, y = fetch_libsvm("news20.binary")
 
 
-Currently supported datasets are in ``libsvmdata.datasets.NAMES.keys()``.
+Currently supported datasets are in ``libsvmdata.supported``.
 
 
 The datasets are saved in a subfolder ``libsvm`` inside ``libsvmdata.datasets.DATA_HOME``, whose value is:
