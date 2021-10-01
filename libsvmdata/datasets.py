@@ -245,6 +245,7 @@ N_FEATURES = {
     'sonar': 60,
     'splice': 60,
     'splice_scale': 60,
+    'splice_test': 60,
     'SUSY': 18,
     'svmguide1': 4,
     'svmguide1_test': 4,
