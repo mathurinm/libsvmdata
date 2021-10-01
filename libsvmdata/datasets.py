@@ -161,6 +161,8 @@ N_FEATURES = {
     'a7a_test': 123,
     'a8a': 123,
     'a8a_test': 123,
+    'a9a': 123,
+    'a9a_test': 123,
     'abalone': 8,
     'abalone_scale': 8,
     'aloi': 128,
