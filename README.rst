@@ -24,7 +24,7 @@ The datasets are saved in a subfolder ``libsvm`` inside ``libsvmdata.datasets.DA
 
 
 
-.. |image0| image:: https://travis-ci.com/mathurinm/libsvmdata.svg?branch=master
+.. |image0| image:: https://travis-ci.com/mathurinm/libsvmdata.svg?branch=main
    :target: https://travis-ci.com/mathurinm/libsvmdata/
-.. |image1| image:: https://codecov.io/gh/mathurinm/libsvmdata/branch/master/graphs/badge.svg?branch=master
+.. |image1| image:: https://codecov.io/gh/mathurinm/libsvmdata/branch/main/graphs/badge.svg?branch=main
    :target: https://codecov.io/gh/mathurinm/libsvmdata
