@@ -390,7 +390,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
     Parameters
     ----------
     dataset : string
-        Dataset name. Must be in .NAMES.keys()
+        Dataset name. Must be in libsvmdata.supported.
 
     replace : bool, default=False
         Whether to force download of dataset if already downloaded.
@@ -401,16 +401,17 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
         y is centered and set to unit norm if the dataset is a regression one.
 
     min_nnz: int, default=0
-        Columns of X with strictly less than min_nnz non-zero entries are
-        discarded.
+        When X is sparse, columns of X with strictly less than min_nnz
+        non-zero entries are discarded.
 
     Returns
     -------
-    X : scipy.sparse.csc_matrix
-        Design matrix, in column sparse format.
+    X : np.ndarray or scipy.sparse.csc_matrix
+        Design matrix, as 2D array or column sparse format depending on the
+        dataset.
 
-    y : 1D or 2D np.array
-        Design vector or matrix (in multiclass setting)
+    y : 1D or 2D np.ndarray
+        Design vector or matrix (in multiclass setting).
 
 
     References
@@ -427,8 +428,8 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
     print("Dataset: %s" % dataset)
     X, y = _get_X_y(dataset, multilabel, replace=replace)
 
-    # preprocessing
-    if min_nnz != 0:
+    # removing columns with to few non zero entries when using sparse X
+    if sparse.issparse(X) and min_nnz != 0:
         X = X[:, np.diff(X.indptr) >= min_nnz]
 
     if normalize:
@@ -438,9 +439,3 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
             y /= np.std(y)
 
     return X, y
-
-
-if __name__ == "__main__":
-    for dataset in NAMES:
-        if not dataset.startswith("sector") and not dataset == "webspam":
-            fetch_libsvm(dataset, replace=False)
