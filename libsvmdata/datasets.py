@@ -349,8 +349,8 @@ def _get_X_y(dataset, multilabel, replace=False):
                 f, n_features=n_features_total, multilabel=multilabel)
 
         tmp_path.unlink()
-        # if X is dense, do not use it in sparse format:
-        if len(X.data) == X.shape[0] * X.shape[1]:
+        # if X's density is more than 0.5, store it in dense format:
+        if len(X.data) >= 0.5 * X.shape[0] * X.shape[1]:
             X = X.toarray(order='F')
             np.save(X_path, X)
         else:
