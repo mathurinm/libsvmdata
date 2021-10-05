@@ -330,7 +330,7 @@ def _get_X_y(dataset, multilabel, replace=False):
         source_path = DATA_HOME / NAMES[dataset]
         if not source_path.parent.exists():
             source_path.parent.mkdir(parents=True)
-        download_libsvm(dataset, source_path, replace=replace)
+        download_libsvm(dataset, source_path,replace=replace)
 
         # decompress file only if it is compressed
         if NAMES[dataset].endswith('.bz2'):
