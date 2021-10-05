@@ -400,7 +400,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
         for a sparse matrix since centering is not performed.
         y is centered and set to unit norm if the dataset is a regression one.
 
-    min_nnz: int, default=0
+    min_nnz : int, default=0
         When X is sparse, columns of X with strictly less than min_nnz
         non-zero entries are discarded.
 
