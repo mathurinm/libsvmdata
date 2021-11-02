@@ -297,15 +297,15 @@ def get_data_home():
 DATA_HOME = get_data_home()
 
 
-def download_libsvm(dataset, destination, replace=False):
+def download_libsvm(dataset, destination, replace=False, verbose=False):
     """Download a dataset from LIBSVM website."""
     url = ("https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/" +
            NAMES[dataset])
-    path = download(url, destination, replace=replace)
+    path = download(url, destination, replace=replace, verbose=verbose)
     return path
 
 
-def _get_X_y(dataset, multilabel, replace=False):
+def _get_X_y(dataset, multilabel, replace=False, verbose=False):
     """Load a LIBSVM dataset as sparse X and observation y/Y.
     If X and y already exists as npz and npy, they are not redownloaded unless
     replace=True."""
@@ -330,20 +330,21 @@ def _get_X_y(dataset, multilabel, replace=False):
         source_path = DATA_HOME / NAMES[dataset]
         if not source_path.parent.exists():
             source_path.parent.mkdir(parents=True)
-        download_libsvm(dataset, source_path, replace=replace)
+        download_libsvm(dataset, source_path, replace=replace, verbose=verbose)
 
         # decompress file only if it is compressed
         if NAMES[dataset].endswith('.bz2'):
             decompressor = BZ2Decompressor()
-            print("Decompressing...")
+            if verbose:
+                print("Decompressing...")
             with open(tmp_path, "wb") as f, open(source_path, "rb") as g:
                 for data in iter(lambda: g.read(100 * 1024), b''):
                     f.write(decompressor.decompress(data))
             source_path.unlink()
 
         n_features_total = N_FEATURES[dataset]
-
-        print("Loading svmlight file...")
+        if verbose:
+            print("Loading svmlight file...")
         with open(tmp_path, 'rb') as f:
             X, y = load_svmlight_file(
                 f, n_features=n_features_total, multilabel=multilabel)
@@ -383,7 +384,8 @@ def _get_X_y(dataset, multilabel, replace=False):
     return X, y
 
 
-def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
+def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0,
+                 verbose=False):
     """
     Download a dataset from LIBSVM website.
 
@@ -403,6 +405,10 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
     min_nnz : int, default=0
         When X is sparse, columns of X with strictly less than min_nnz
         non-zero entries are discarded.
+
+    verbose : bool, default=False
+        Whether or not to print information about dataset loading.
+
 
     Returns
     -------
@@ -425,8 +431,9 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0):
     multilabel = NAMES[dataset].split('/')[0] == 'multilabel'
     is_regression = NAMES[dataset].split('/')[0] == 'regression'
 
-    print("Dataset: %s" % dataset)
-    X, y = _get_X_y(dataset, multilabel, replace=replace)
+    if verbose:
+        print("Dataset: %s" % dataset)
+    X, y = _get_X_y(dataset, multilabel, replace=replace, verbose=verbose)
 
     # removing columns with to few non zero entries when using sparse X
     if sparse.issparse(X) and min_nnz != 0:
