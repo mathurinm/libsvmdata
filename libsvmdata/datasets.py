@@ -140,6 +140,8 @@ NAMES = {
     'w9a': 'binary/w9a',
     'w9a_test': 'binary/w9a.t',
     'webspam': 'binary/webspam_wc_normalized_trigram.svm.bz2',
+    'YearPredictionMSD': 'regression/YearPredictionMSD.bz2',
+    'YearPredictionMSD_test': 'regression/YearPredictionMSD.t.bz2',
     'yeast': 'multilabel/yeast_train.svm.bz2',
     'yeast_test': 'multilabel/yeast_test.svm.bz2',
 }
@@ -273,6 +275,8 @@ N_FEATURES = {
     'w9a': 300,
     'w9a_test': 300,
     'webspam': 16_609_143,
+    'YearPredictionMSD': 90,
+    'YearPredictionMSD_test': 90,
     'yeast': 103,
     'yeast_test': 103,
 }
