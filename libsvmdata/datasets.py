@@ -1,6 +1,7 @@
 # Author: Mathurin Massias <mathurin.massias@gmail.com>
 # License: BSD 3 clause
 import os
+import tarfile
 from pathlib import Path
 from bz2 import BZ2Decompressor
 
@@ -50,6 +51,8 @@ NAMES = {
     'covtype.multiclass': 'multiclass/covtype.bz2',
     'covtype.multiclass_scale': 'multiclass/covtype.scale01.bz2',
     'cpusmall': 'regression/cpusmall',
+    'criteo': 'binary/criteo.kaggle2014.svm.tar.xz',
+    'criteo-test': 'binary/criteo.kaggle2014.svm.tar.xz',
     'delicious': 'multilabel/delicious.bz2',
     'diabetes': 'binary/diabetes',
     'diabetes_scale': 'binary/diabetes_scale',
@@ -146,6 +149,13 @@ NAMES = {
     'yeast_test': 'multilabel/yeast_test.svm.bz2',
 }
 
+# Mpping to the file to load the data from in the tar archive and
+# the list of the other datasets that can be extracted too
+TAR_FILE_MEMBERS = {
+    'criteo': ('binary/criteo.kaggle2014.svm/train.txt.svm', ['criteo-test']),
+    'criteo-test': ('binary/criteo.kaggle2014.svm/test.txt.svm', ['criteo'])
+}
+
 N_FEATURES = {
     'a1a': 123,
     'a1a_test': 123,
@@ -185,6 +195,8 @@ N_FEATURES = {
     'covtype.multiclass': 54,
     'covtype.multiclass_scale': 54,
     'cpusmall': 12,
+    'criteo': 1_000_000,
+    'criteo-test': 1_000_000,
     'delicious': 500,
     'diabetes': 8,
     'diabetes_scale': 8,
@@ -315,20 +327,32 @@ def _get_X_y(dataset, multilabel, replace=False, verbose=False):
     replace=True."""
 
     # some files are compressed, some are not:
-    if NAMES[dataset].endswith('.bz2'):
-        stripped_name = NAMES[dataset][:-4]
-    else:
-        stripped_name = NAMES[dataset]
+    stripped_name = NAMES[dataset]
+    for ext in ['.bz2', '.tar.xz']:
+        if stripped_name.endswith(ext):
+            stripped_name = stripped_name[:-len(ext)]
 
     ext = '.npz' if multilabel else '.npy'
-    y_path = DATA_HOME / f"{stripped_name}_target{ext}"
-    X_path = DATA_HOME / f"{stripped_name}_data"  # no ext to handle npy or npz
+    if dataset in TAR_FILE_MEMBERS:
+        tmp_path, others = TAR_FILE_MEMBERS[dataset]
+        path_mapping = {
+            str(DATA_HOME / TAR_FILE_MEMBERS[d][0]): d for d in others
+        }
+        tmp_path = DATA_HOME / tmp_path
+        path_mapping[str(tmp_path)] = dataset
+    else:
+        tmp_path = DATA_HOME / stripped_name
+        path_mapping = {str(tmp_path): dataset}
+
+    y_path = f"{tmp_path}_target{ext}"
+    # no ext for X to handle npy or npz
+    X_path = f"{tmp_path}_data"
+
     if (replace or not y_path.exists()
         or not ((X_path.parent / (X_path.name + '.npy')).exists() or
                 (X_path.parent / (X_path.name + '.npz')).exists())):
         # above, do not use .with_suffix bc of datasets like a1a.t, where the
         # method would replace the .t by .npz
-        tmp_path = DATA_HOME / stripped_name
 
         # Download the dataset
         source_path = DATA_HOME / NAMES[dataset]
@@ -337,7 +361,14 @@ def _get_X_y(dataset, multilabel, replace=False, verbose=False):
         download_libsvm(dataset, source_path, replace=replace, verbose=verbose)
 
         # decompress file only if it is compressed
-        if NAMES[dataset].endswith('.bz2'):
+        if tarfile.is_tarfile(source_path):
+            if verbose:
+                print("Decompressing...")
+            with tarfile.open(source_path, "r") as f:
+                f.extractall(source_path.parent)
+            source_path.unlink()
+
+        elif NAMES[dataset].endswith('.bz2'):
             decompressor = BZ2Decompressor()
             if verbose:
                 print("Decompressing...")
@@ -349,30 +380,44 @@ def _get_X_y(dataset, multilabel, replace=False, verbose=False):
         n_features_total = N_FEATURES[dataset]
         if verbose:
             print("Loading svmlight file...")
-        with open(tmp_path, 'rb') as f:
-            X, y = load_svmlight_file(
-                f, n_features=n_features_total, multilabel=multilabel)
 
-        tmp_path.unlink()
-        # if X's density is more than 0.5, store it in dense format:
-        if len(X.data) >= 0.5 * X.shape[0] * X.shape[1]:
-            X = X.toarray(order='F')
-            np.save(X_path, X)
-        else:
-            X = sparse.csc_matrix(X)
-            X.sort_indices()
-            sparse.save_npz(X_path, X)
+        # Loop over multiple files to cope with cases where the dataset is in
+        # an archive. Store the result for all datasets in the archive and
+        # keep the result to return in X_y_.
+        X_y_ = None
+        for path, d in path_mapping.items():
+            with open(path, 'rb') as f:
+                X, y = load_svmlight_file(
+                    f, n_features=n_features_total, multilabel=multilabel
+                )
 
-        if multilabel:
-            indices = np.array([lab for labels in y for lab in labels])
-            indptr = np.cumsum([0] + [len(labels) for labels in y])
-            data = np.ones_like(indices)
-            Y = sparse.csr_matrix((data, indices, indptr))
-            sparse.save_npz(y_path, Y)
-            return X, Y
+            if d == dataset:
+                X_y_ = X, y
 
-        else:
-            np.save(y_path, y)
+            # recompute pathes adapt to each dataset in case it is an archive.
+            y_path = f"{path}_target{ext}"
+            X_path = f"{path}_data"
+
+            # if X's density is more than 0.5, store it in dense format:
+            if len(X.data) >= 0.5 * X.shape[0] * X.shape[1]:
+                X = X.toarray(order='F')
+                np.save(X_path, X)
+            else:
+                if not sparse.issparse(X):
+                    X = sparse.csc_matrix(X)
+                X.sort_indices()
+                sparse.save_npz(X_path, X)
+
+            if multilabel:
+                indices = np.array([lab for labels in y for lab in labels])
+                indptr = np.cumsum([0] + [len(labels) for labels in y])
+                data = np.ones_like(indices)
+                Y = sparse.csr_matrix((data, indices, indptr))
+                sparse.save_npz(y_path, Y)
+
+            else:
+                np.save(y_path, y)
+        X, y = X_y_
 
     else:
         try:
