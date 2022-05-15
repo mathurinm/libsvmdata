@@ -344,9 +344,9 @@ def _get_X_y(dataset, multilabel, replace=False, verbose=False):
         tmp_path = DATA_HOME / stripped_name
         path_mapping = {str(tmp_path): dataset}
 
-    y_path = f"{tmp_path}_target{ext}"
+    y_path = tmp_path.parent / f"{tmp_path.name}_target{ext}"
     # no ext for X to handle npy or npz
-    X_path = f"{tmp_path}_data"
+    X_path = tmp_path.parent / f"{tmp_path.name}_data"
 
     if (replace or not y_path.exists()
         or not ((X_path.parent / (X_path.name + '.npy')).exists() or
