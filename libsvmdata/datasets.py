@@ -391,9 +391,6 @@ def _get_X_y(dataset, multilabel, replace=False, verbose=False):
                     f, n_features=n_features_total, multilabel=multilabel
                 )
 
-            if d == dataset:
-                X_y_ = X, y
-
             # recompute pathes adapt to each dataset in case it is an archive.
             y_path = f"{path}_target{ext}"
             X_path = f"{path}_data"
@@ -412,11 +409,14 @@ def _get_X_y(dataset, multilabel, replace=False, verbose=False):
                 indices = np.array([lab for labels in y for lab in labels])
                 indptr = np.cumsum([0] + [len(labels) for labels in y])
                 data = np.ones_like(indices)
-                Y = sparse.csr_matrix((data, indices, indptr))
-                sparse.save_npz(y_path, Y)
-
+                y = sparse.csr_matrix((data, indices, indptr))
+                sparse.save_npz(y_path, y)
             else:
                 np.save(y_path, y)
+
+            if d == dataset:
+                X_y_ = X, y
+
         X, y = X_y_
 
     else:
