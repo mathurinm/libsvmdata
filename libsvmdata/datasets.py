@@ -431,7 +431,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0,
     """
     if dataset not in NAMES:
         raise ValueError("Unsupported dataset %s. " % dataset +
-                         "Supported datasets are: \n- " + '\n- '.join(NAMES))
+                         "Supported datasets are: \n" + ', '.join(NAMES))
     multilabel = NAMES[dataset].split('/')[0] == 'multilabel'
     is_regression = NAMES[dataset].split('/')[0] == 'regression'
 
