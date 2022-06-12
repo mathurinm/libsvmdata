@@ -42,8 +42,8 @@ jobs:
           ls dist
           # twine upload --repository testpypi dist/*.whl  dist/*.tar.gz
 
-      - name: publish to PyPI
-        env:
+      # - name: publish to PyPI
+      #   env:
         #   TWINE_USERNAME: __token__
         #   TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         # run: |
