@@ -40,7 +40,7 @@ jobs:
         run: |
           pip install twine
           ls dist
-          # twine upload --repository testpypi dist/*.whl  dist/*.tar.gz
+          twine upload --repository testpypi dist/*.whl  dist/*.tar.gz
 
       # - name: publish to PyPI
       #   env:
