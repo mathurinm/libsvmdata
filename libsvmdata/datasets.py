@@ -113,7 +113,7 @@ NAMES = {
     'splice': 'binary/splice',
     'splice_scale': 'binary/splice_scale',
     'splice_test': 'binary/splice.t',
-    'SUSY': 'binary/SUSY.bz2',
+    'SUSY': 'binary/SUSY.xz',
     'svmguide1': 'binary/svmguide1',
     'svmguide1_test': 'binary/svmguide1.t',
     # 'svmguide3': 'binary/svmguide3',
