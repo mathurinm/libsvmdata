@@ -1,3 +1,5 @@
+.DS_Store
+.vscode
 libsvmdata.egg-info
 
 # Python's gitignore
