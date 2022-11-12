@@ -27,7 +27,7 @@ jobs:
     - name: test
       run: |
         pip install pytest pytest-cov coverage numpydoc codecov
-        pytest -lv --cov-report term-missing libsvmdata --cov=libsvmdata --cov-config .coveragerc
+        pytest -lv --cov-report term-missing --cov=libsvmdata --cov-config .coveragerc
         codecov
     - name: codecov
       uses: codecov/codecov-action@v1
