@@ -20,8 +20,7 @@ LICENSE = 'BSD (3-clause)'
 DOWNLOAD_URL = 'https://github.com/mathurinm/libsvmdata.git'
 VERSION = version
 
-setup(
-    name='libsvmdata',
+setup(name='libsvmdata',
     version=VERSION,
     description=DESCRIPTION,
     long_description=open('README.rst').read(),
