@@ -6,6 +6,12 @@ Currently supported databases are:
 
 - LIBSVM (libsvm_)
 
+Currently supported datasets are in ``libsvmdata.SUPPORTED`` and can be displayed as: 
+
+::
+
+   from libsvmdata import print_supported_datasets
+   print_supported_datasets()
 
 Getting design matrix and target variable is as easy as:
 
@@ -14,13 +20,7 @@ Getting design matrix and target variable is as easy as:
    from libsvmdata import fetch_dataset
    X, y = fetch_dataset("news20.binary")
 
-There is no need to specify the database name. Supported datasets can be displayed as:
-
-::
-
-   from libsvmdata import print_supported_datasets
-   print_supported_datasets()
-
+There is no need to specify the database name.
 
 Files are saved under ``DATA_HOME/<database_name>``, where the value of ``DATA_HOME`` is:
 

@@ -4,43 +4,59 @@ from libsvmdata import fetch_dataset
 
 # TODO : add more datasets to test ?
 TEST_DATASETS = {
-    "regression": ["abalone", "bodyfat"],
-    "binary": ["a1a", "breast-cancer"],
-    "multiclass": ["dna", "iris"],
-    "multilabel": ["bibtex", "scene-classification"],
+    "regression": [
+        ("abalone", 4_177, 8),
+        ("bodyfat", 252, 14),
+    ],
+    "binary": [
+        ("a1a", 1_605, 123),
+        ("breast-cancer", 683, 10),
+    ],
+    "multiclass": [
+        ("dna", 2_000, 180),
+        ("iris", 150, 4),
+    ],
+    "multilabel": [
+        ("bibtex", 7_395, 1_836),
+        ("scene-classification", 1_211, 294),
+    ],
 }
 
 
-@pytest.mark.parametrize("dataset_name", TEST_DATASETS["regression"])
-def test_regression(dataset_name):
+@pytest.mark.parametrize("dataset_info", TEST_DATASETS["regression"])
+def test_regression(dataset_info):
+    dataset_name, n, p = dataset_info
     X, y = fetch_dataset(dataset_name)
-    assert X.shape[0] > 0
-    assert X.shape[1] > 0
-    assert X.shape[0] == y.shape[0]
+    assert X.shape[0] == n
+    assert X.shape[1] == p
+    assert y.shape[0] == n
 
 
-@pytest.mark.parametrize("dataset_name", TEST_DATASETS["binary"])
-def test_binary(dataset_name):
+@pytest.mark.parametrize("dataset_info", TEST_DATASETS["binary"])
+def test_binary(dataset_info):
+    dataset_name, n, p = dataset_info
     X, y = fetch_dataset(dataset_name)
-    assert X.shape[0] > 0
-    assert X.shape[1] > 0
-    assert X.shape[0] == y.shape[0]
-    assert len(np.unique(y)) == 2.0
+    assert X.shape[0] == n
+    assert X.shape[1] == p
+    assert y.shape[0] == n
+    assert len(np.unique(y)) == 2
 
 
-@pytest.mark.parametrize("dataset_name", TEST_DATASETS["multiclass"])
-def test_multiclass(dataset_name):
+@pytest.mark.parametrize("dataset_info", TEST_DATASETS["multiclass"])
+def test_multiclass(dataset_info):
+    dataset_name, n, p = dataset_info
     X, y = fetch_dataset(dataset_name)
-    assert X.shape[0] > 0
-    assert X.shape[1] > 0
-    assert X.shape[0] == y.shape[0]
-    assert len(np.unique(y)) > 2.0
+    assert X.shape[0] == n
+    assert X.shape[1] == p
+    assert y.shape[0] == n
+    assert len(np.unique(y)) > 2
 
 
-@pytest.mark.parametrize("dataset_name", TEST_DATASETS["multilabel"])
-def test_multilabel(dataset_name):
+@pytest.mark.parametrize("dataset_info", TEST_DATASETS["multilabel"])
+def test_multilabel(dataset_info):
+    dataset_name, n, p = dataset_info
     X, y = fetch_dataset(dataset_name)
-    assert X.shape[0] > 0
-    assert X.shape[1] > 0
-    assert X.shape[0] == y.shape[0]
+    assert X.shape[0] == n
+    assert X.shape[1] == p
+    assert y.shape[0] == n
     assert y.shape[1] > 2

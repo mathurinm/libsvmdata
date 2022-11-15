@@ -7,8 +7,8 @@ from libsvmdata import fetch_dataset, print_supported_datasets
 def test_replace():
     X_first, y_first = fetch_dataset("iris", replace=True)
     X_second, y_second = fetch_dataset("iris")
-    assert np.all(X_first == X_second)
-    assert np.all(y_first == y_second)
+    np.testing.assert_equal(X_first, X_second)
+    np.testing.assert_equal(y_first, y_second)
 
 
 def test_wrong_dataset():

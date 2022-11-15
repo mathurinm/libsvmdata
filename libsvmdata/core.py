@@ -24,7 +24,7 @@ def _get_data_home(subdir_name=""):
 class AbstractDataset(ABC):
     """Base class defining a dataset along with its fetching methods."""
 
-    # In the derived classes, __init__() must set the following attributes :
+    # In the derived class, __init__() must set the following attributes :
     dataset_name = None  # dataset name
     dataset_file = None  # dataset file (with potential extensions)
     dataset_dir = None  # subdirectory name (see _get_data_home())
@@ -33,7 +33,7 @@ class AbstractDataset(ABC):
     @abstractmethod
     def __init__(self):
         """
-        In the derived classes, this function must define the class attributes.
+        In the derived class, this function must define the class attributes.
         It can also be used to pass additional information required in the
         function _load_file_and_save_data() of the derived class.
         """
@@ -52,7 +52,7 @@ class AbstractDataset(ABC):
         pass
 
     def _load_data(self, ext_dataset_path):
-        """Recover data from the extracted .npz/.npy files."""
+        """Load data from the extracted .npz/.npy files."""
 
         try:
             X = sparse.load_npz(str(ext_dataset_path) + "_X.npz")
@@ -72,10 +72,7 @@ class AbstractDataset(ABC):
         .npz and/or .npy files, they are not redownloaded, unless replace=True.
         """
 
-        # Raw dataset file
         raw_dataset_path = self.dataset_dir / self.dataset_file
-
-        # Extracted dataset file
         ext_dataset_path = self.dataset_dir / self.dataset_name
 
         # Check if the dataset already exists
@@ -83,7 +80,7 @@ class AbstractDataset(ABC):
             regex = re.compile(f"{self.dataset_name}_(X|y).(npz|npy)")
             files = os.listdir(self.dataset_dir)
             found = [f for f in files if re.search(regex, f)]
-            exists = len(found) > 0
+            exists = len(found) == 2
         else:
             found = []
             exists = False
