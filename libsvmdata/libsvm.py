@@ -100,9 +100,7 @@ DATASETS = [
     LibsvmDataset("connect-4", "connect-4", "multiclass", 126),
     LibsvmDataset("covtype.binary", "covtype.libsvm.binary.bz2", "binary", 54),
     LibsvmDataset("covtype.multiclass", "covtype.bz2", "multiclass", 54),
-    LibsvmDataset(
-        "covtype.multiclass_scale", "covtype.scale01.bz2", "multiclass", 54
-    ),
+    LibsvmDataset("covtype.multiclass_scale", "covtype.scale01.bz2", "multiclass", 54), # noqa
     LibsvmDataset("cpusmall", "cpusmall", "regression", 12),
     LibsvmDataset("delicious", "delicious.bz2", "multilabel", 500),
     LibsvmDataset("diabetes", "diabetes", "binary", 8),
@@ -133,18 +131,12 @@ DATASETS = [
     LibsvmDataset("leukemia", "leu.bz2", "binary", 7129),
     LibsvmDataset("leukemia_test", "leu.t.bz2", "binary", 7129),
     LibsvmDataset("liver-disorders", "liver-disorders", "binary", 5),
-    LibsvmDataset(
-        "liver-disorders_scale", "liver-disorders_scale", "binary", 5
-    ),
+    LibsvmDataset("liver-disorders_scale", "liver-disorders_scale", "binary", 5), # noqa
     LibsvmDataset("liver-disorders_test", "liver-disorders.t", "binary", 5),
     LibsvmDataset("madelon", "madelon", "binary", 500),
     LibsvmDataset("madelon_test", "madelon.t", "binary", 500),
-    LibsvmDataset(
-        "mediamill", "mediamill/train-exp1.svm.bz2", "multilabel", 120
-    ),
-    LibsvmDataset(
-        "mediamill_test", "mediamill/test-exp1.svm.bz2", "multilabel", 120
-    ),
+    LibsvmDataset("mediamill", "mediamill/train-exp1.svm.bz2", "multilabel", 120), # noqa
+    LibsvmDataset("mediamill_test", "mediamill/test-exp1.svm.bz2", "multilabel", 120), # noqa
     LibsvmDataset("mnist", "mnist.bz2", "multiclass", 780),
     LibsvmDataset("news20.binary", "news20.binary.bz2", "binary", 1355191),
     LibsvmDataset("news20.multiclass", "news20.bz2", "multiclass", 62061),
@@ -153,40 +145,19 @@ DATASETS = [
     LibsvmDataset("phishing", "phishing", "binary", 68),
     LibsvmDataset("rcv1.binary", "rcv1_train.binary.bz2", "binary", 47236),
     LibsvmDataset("rcv1.binary_test", "rcv1_test.binary.bz2", "binary", 47236),
-    LibsvmDataset(
-        "rcv1.multiclass", "rcv1_train.multiclass.bz2", "multiclass", 47236
-    ),
-    LibsvmDataset(
-        "rcv1.multiclass_test", "rcv1_test.multiclass.bz2", "multiclass", 47236
-    ),
-    LibsvmDataset(
-        "rcv1_topics_test", "rcv1_topics_test_2.svm.bz2", "multilabel", 47236
-    ),
+    LibsvmDataset("rcv1.multiclass", "rcv1_train.multiclass.bz2", "multiclass", 47236), # noqa
+    LibsvmDataset("rcv1.multiclass_test", "rcv1_test.multiclass.bz2", "multiclass", 47236), # noqa
+    LibsvmDataset("rcv1_topics_test", "rcv1_topics_test_2.svm.bz2", "multilabel", 47236), # noqa
     LibsvmDataset("real-sim", "real-sim.bz2", "binary", 20958),
-    LibsvmDataset(
-        "scene-classification", "scene_train.bz2", "multilabel", 294
-    ),
-    LibsvmDataset(
-        "scene-classification_test", "scene_test.bz2", "multilabel", 294
-    ),
-    LibsvmDataset(
-        "sector.scale", "sector/sector.scale.bz2", "multiclass", 55197
-    ),
-    LibsvmDataset(
-        "sector.scale_test", "sector/sector.t.scale.bz2", "multiclass", 55197
-    ),
+    LibsvmDataset("scene-classification", "scene_train.bz2", "multilabel", 294), # noqa
+    LibsvmDataset("scene-classification_test", "scene_test.bz2", "multilabel", 294), # noqa
+    LibsvmDataset("sector.scale", "sector/sector.scale.bz2", "multiclass", 55197), # noqa
+    LibsvmDataset("sector.scale_test", "sector/sector.t.scale.bz2", "multiclass", 55197), # noqa
     LibsvmDataset("sector", "sector/sector.bz2", "multiclass", 55197),
     LibsvmDataset("sector_test", "sector/sector.t.bz2", "multiclass", 55197),
     LibsvmDataset("sensit", "vehicle/combined.bz2", "multiclass", 100),
-    LibsvmDataset(
-        "siam-competition2007", "tmc2007_train.svm.bz2", "multilabel", 30438
-    ),
-    LibsvmDataset(
-        "siam-competition2007_test",
-        "tmc2007_test.svm.bz2",
-        "multilabel",
-        30438,
-    ),
+    LibsvmDataset("siam-competition2007", "tmc2007_train.svm.bz2", "multilabel", 30438), # noqa
+    LibsvmDataset("siam-competition2007_test", "tmc2007_test.svm.bz2", "multilabel", 30438,), # noqa
     LibsvmDataset("skin_nonskin", "skin_nonskin", "binary", 3),
     LibsvmDataset("smallNORB", "smallNORB.bz2", "multiclass", 18432),
     LibsvmDataset("sonar", "sonar_scale", "binary", 60),
@@ -217,15 +188,9 @@ DATASETS = [
     LibsvmDataset("w8a_test", "w8a.t", "binary", 300),
     LibsvmDataset("w9a", "w9a", "binary", 300),
     LibsvmDataset("w9a_test", "w9a.t", "binary", 300),
-    LibsvmDataset(
-        "webspam", "webspam_wc_normalized_trigram.svm.bz2", "binary", 16609143
-    ),
-    LibsvmDataset(
-        "YearPredictionMSD", "YearPredictionMSD.bz2", "regression", 90
-    ),
-    LibsvmDataset(
-        "YearPredictionMSD_test", "YearPredictionMSD.t.bz2", "regression", 90
-    ),
+    LibsvmDataset("webspam", "webspam_wc_normalized_trigram.svm.bz2", "binary", 16609143), # noqa
+    LibsvmDataset("YearPredictionMSD", "YearPredictionMSD.bz2", "regression", 90), # noqa
+    LibsvmDataset("YearPredictionMSD_test", "YearPredictionMSD.t.bz2", "regression", 90), # noqa
     LibsvmDataset("yeast", "yeast_train.svm.bz2", "multilabel", 103),
     LibsvmDataset("yeast_test", "yeast_test.svm.bz2", "multilabel", 103),
 ]
