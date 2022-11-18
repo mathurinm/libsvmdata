@@ -18,4 +18,3 @@ def test_wrong_dataset():
 
 def test_print_supported_datasets():
     print_supported_datasets()
-    assert True

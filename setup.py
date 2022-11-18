@@ -21,13 +21,13 @@ DOWNLOAD_URL = 'https://github.com/mathurinm/libsvmdata.git'
 VERSION = version
 
 setup(name='libsvmdata',
-    version=VERSION,
-    description=DESCRIPTION,
-    long_description=open('README.rst').read(),
-    license=LICENSE,
-    maintainer=MAINTAINER,
-    maintainer_email=MAINTAINER_EMAIL,
-    download_url=DOWNLOAD_URL,
-    install_requires=['download', 'numpy>=1.12', 'scikit-learn', 'scipy'],
-    packages=find_packages(),
-)
+      version=VERSION,
+      description=DESCRIPTION,
+      long_description=open('README.rst').read(),
+      license=LICENSE,
+      maintainer=MAINTAINER,
+      maintainer_email=MAINTAINER_EMAIL,
+      download_url=DOWNLOAD_URL,
+      install_requires=['download', 'numpy>=1.12', 'scikit-learn', 'scipy'],
+      packages=find_packages(),
+      )

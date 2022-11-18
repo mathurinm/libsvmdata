@@ -2,7 +2,7 @@ import numpy as np
 from bz2 import BZ2Decompressor
 from scipy import sparse
 from sklearn.datasets import load_svmlight_file
-from libsvmdata.core import _get_data_home, AbstractDataset
+from libsvmdata.abstraction import _get_data_home, AbstractDataset
 
 LIBSVM_DATA_HOME = _get_data_home("libsvm")
 LIBSVM_BASE_URL = "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets"

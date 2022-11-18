@@ -23,28 +23,25 @@ TEST_DATASETS = {
 }
 
 
-@pytest.mark.parametrize("dataset_info", TEST_DATASETS["regression"])
-def test_regression(dataset_info):
-    dataset_name, n, p = dataset_info
+@pytest.mark.parametrize("dataset_name,n,p", TEST_DATASETS["regression"])
+def test_regression(dataset_name, n, p):
     X, y = fetch_dataset(dataset_name)
     assert X.shape[0] == n
     assert X.shape[1] == p
     assert y.shape[0] == n
 
 
-@pytest.mark.parametrize("dataset_info", TEST_DATASETS["binary"])
-def test_binary(dataset_info):
-    dataset_name, n, p = dataset_info
-    X, y = fetch_dataset(dataset_name)
+@pytest.mark.parametrize("dataset_name,n,p", TEST_DATASETS["binary"])
+def test_binary(dataset_name, n, p):
+    X, y = fetch_dataset(dataset_name, n, p)
     assert X.shape[0] == n
     assert X.shape[1] == p
     assert y.shape[0] == n
     assert len(np.unique(y)) == 2
 
 
-@pytest.mark.parametrize("dataset_info", TEST_DATASETS["multiclass"])
-def test_multiclass(dataset_info):
-    dataset_name, n, p = dataset_info
+@pytest.mark.parametrize("dataset_name,n,p", TEST_DATASETS["multiclass"])
+def test_multiclass(dataset_name, n, p):
     X, y = fetch_dataset(dataset_name)
     assert X.shape[0] == n
     assert X.shape[1] == p
@@ -52,9 +49,8 @@ def test_multiclass(dataset_info):
     assert len(np.unique(y)) > 2
 
 
-@pytest.mark.parametrize("dataset_info", TEST_DATASETS["multilabel"])
-def test_multilabel(dataset_info):
-    dataset_name, n, p = dataset_info
+@pytest.mark.parametrize("dataset_name,n,p", TEST_DATASETS["multilabel"])
+def test_multilabel(dataset_name, n, p):
     X, y = fetch_dataset(dataset_name)
     assert X.shape[0] == n
     assert X.shape[1] == p
