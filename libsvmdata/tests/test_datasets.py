@@ -63,4 +63,3 @@ def test_normalization():
     assert np.allclose(np.linalg.norm(X, axis=0), 1.)
     assert np.allclose(np.mean(y), 0.)
     assert np.allclose(np.std(y), 1.)
-    
