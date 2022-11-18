@@ -3,4 +3,4 @@ from .core import fetch_dataset, print_supported_datasets, ALL_DATASETS
 
 supported = list(ALL_DATASETS.keys())
 
-__version__ = "0.5dev0"
+__version__ = '0.5dev0'
