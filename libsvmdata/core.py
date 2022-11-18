@@ -8,12 +8,6 @@ ALL_DATASETS = {
     for dataset in datasets
 }
 
-SUPPORTED = {
-    database_name: [dataset.dataset_name for dataset in datasets]
-    for database_name, datasets in ALL_DATABASES.items()
-}
-
-
 def fetch_dataset(dataset_name, replace=False, verbose=False):
     """
     Load a dataset. It is downloaded only if not present or when replace=True.
@@ -55,5 +49,6 @@ def fetch_dataset(dataset_name, replace=False, verbose=False):
 
 def print_supported_datasets():
     print("Supported datasets")
-    for database_name, datasets in SUPPORTED.items():
-        print("  - {} :".format(database_name), ", ".join(datasets))
+    for database_name, datasets in ALL_DATABASES.items():
+        datasets_names = [dataset.dataset_name for dataset in datasets]
+        print("  - {} :".format(database_name), ", ".join(datasets_names))

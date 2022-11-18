@@ -6,7 +6,7 @@ Currently supported databases are:
 
 - LIBSVM (libsvm_)
 
-Currently supported datasets are in ``libsvmdata.SUPPORTED`` and can be displayed as: 
+Currently supported datasets are in ``libsvmdata.supported`` and can be displayed as: 
 
 ::
 
