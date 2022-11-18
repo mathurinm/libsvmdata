@@ -1,7 +1,7 @@
 import os
 from setuptools.command.build_ext import build_ext
-
 from setuptools import dist, setup, Extension, find_packages
+
 descr = 'Fetcher for datasets'
 
 version = None
