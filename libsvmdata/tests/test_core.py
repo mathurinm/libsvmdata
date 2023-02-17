@@ -1,5 +1,5 @@
 import pytest
-import numpy as np
+from numpy.testing import assert_equal
 from libsvmdata import fetch_dataset, print_supported_datasets
 
 
@@ -7,8 +7,8 @@ from libsvmdata import fetch_dataset, print_supported_datasets
 def test_replace():
     X_first, y_first = fetch_dataset("iris", replace=True)
     X_second, y_second = fetch_dataset("iris")
-    np.testing.assert_equal(X_first, X_second)
-    np.testing.assert_equal(y_first, y_second)
+    assert_equal(X_first, X_second)
+    assert_equal(y_first, y_second)
 
 
 def test_wrong_dataset():
