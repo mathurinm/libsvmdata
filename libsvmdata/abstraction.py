@@ -106,7 +106,10 @@ class AbstractDataset(ABC):
 
             if verbose:
                 print("Loading file and saving data...")
-            X, y = self._load_file_and_save_data(raw_dataset_path, ext_dataset_path)
+            X, y = self._load_file_and_save_data(
+                raw_dataset_path,
+                ext_dataset_path
+            )
 
         else:
             if verbose:

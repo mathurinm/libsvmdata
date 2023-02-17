@@ -8,6 +8,7 @@ ALL_DATASETS = {
     for dataset in datasets
 }
 
+
 def fetch_dataset(dataset_name, replace=False, verbose=False):
     """
     Load a dataset. It is downloaded only if not present or when replace=True.
