@@ -34,7 +34,8 @@ def download_libsvm(dataset, destination, replace=False, verbose=False):
     path = download(url, destination, replace=replace, verbose=verbose)
     return path
 
-def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0, 
+
+def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0,
                  verbose=False):
     """
     Download a dataset from LIBSVM website.
@@ -63,8 +64,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0,
     References
     ----------
     https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
-
-    """    
+    """
 
     warnings.warn(
         "The function `fetch_libsvm` will be depreciated in `v0.5` and "
@@ -76,14 +76,13 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0,
     if dataset not in NAMES:
         raise ValueError("Unsupported dataset %s. " % dataset +
                          "Supported datasets are: \n" + ', '.join(NAMES))
-    multilabel = NAMES[dataset].split('/')[0] == 'multilabel'
     is_regression = NAMES[dataset].split('/')[0] == 'regression'
 
     if verbose:
         print("Dataset: %s" % dataset)
 
     # Does exactly the same as the original `_get_X_y` function but without
-    # the normalization and the removing of too sparse columns done in 
+    # the normalization and the removing of too sparse columns done in
     # post-processing step when. These steps are therefore done just below.
     X, y = fetch_dataset(dataset, replace=replace, verbose=verbose)
 
