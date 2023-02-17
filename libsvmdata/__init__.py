@@ -1,5 +1,5 @@
-from .datasets import fetch_libsvm, download_libsvm  
-from .core import fetch_dataset, print_supported_datasets, ALL_DATASETS
+from libsvmdata.datasets import fetch_libsvm, download_libsvm  
+from libsvmdata.core import fetch_dataset, print_supported_datasets, ALL_DATASETS
 
 supported = list(ALL_DATASETS.keys())
 

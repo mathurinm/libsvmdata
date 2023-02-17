@@ -6,8 +6,8 @@ import numpy as np
 import warnings
 from sklearn import preprocessing
 from scipy import sparse
-from .libsvm import DATASETS as libsvm_datasets
-from .core import fetch_dataset
+from libsvmdata.libsvm import DATASETS as libsvm_datasets
+from libsvmdata.core import fetch_dataset
 
 # The `NAMES` variable before the pull request #37 can be reconstructed from
 # the `DATASETS` variable in the `libsvm.py` file.

@@ -1,4 +1,4 @@
-from .libsvm import DATASETS as libsvm_datasets
+from libsvmdata.libsvm import DATASETS as libsvm_datasets
 
 ALL_DATABASES = {"LIBSVM": libsvm_datasets}
 
@@ -38,7 +38,8 @@ def fetch_dataset(dataset_name, replace=False, verbose=False):
     if dataset_name not in ALL_DATASETS.keys():
         raise ValueError(
             f"Unsupported dataset `{dataset_name}`. Supported datasets can be "
-            "displayed using the `libsvmdata.print_supported_datasets` function."
+            "displayed using the `libsvmdata.print_supported_datasets` "
+            "function."
         )
 
     dataset = ALL_DATASETS[dataset_name]
