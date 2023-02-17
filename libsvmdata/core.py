@@ -51,5 +51,5 @@ def fetch_dataset(dataset_name, replace=False, verbose=False):
 def print_supported_datasets():
     print("Supported datasets")
     for database_name, datasets in ALL_DATABASES.items():
-        datasets_names = [dataset.dataset_name for dataset in datasets]
-        print("  - {} :".format(database_name), ", ".join(datasets_names))
+        print(f"- {database_name}: ")
+        print(", ".join(dataset.dataset_name for dataset in datasets))
