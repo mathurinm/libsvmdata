@@ -21,7 +21,7 @@ def download_libsvm(dataset, destination, replace=False, verbose=False):
     """Download a dataset from LIBSVM website."""
 
     warnings.warn(
-        "The function `download_libsvm` will be depreciated in `v0.5` and "
+        "The function `download_libsvm` is deprecated in `v0.5` and "
         "removed in `v0.6`. See "
         "https://github.com/mathurinm/libsvmdata/pull/37 for more details.",
         FutureWarning
