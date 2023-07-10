@@ -67,7 +67,7 @@ def fetch_libsvm(dataset, replace=False, normalize=False, min_nnz=0,
     """
 
     warnings.warn(
-        "The function `fetch_libsvm` will be depreciated in `v0.5` and "
+        "The function `fetch_libsvm` is deprecated in `v0.5` and "
         "replaced by `fetch_dataset`. It will be removed in `v0.6`. See "
         "https://github.com/mathurinm/libsvmdata/pull/37 for more details.",
         FutureWarning
