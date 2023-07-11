@@ -1,5 +1,6 @@
-from .datasets import fetch_libsvm, download_libsvm, NAMES  # noqa
+from libsvmdata.datasets import fetch_libsvm, download_libsvm  
+from libsvmdata.core import fetch_dataset, print_supported_datasets, ALL_DATASETS
 
-supported = list(NAMES.keys())  # noqa
+supported = list(ALL_DATASETS.keys())
 
 __version__ = '0.5dev0'

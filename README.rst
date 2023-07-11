@@ -1,26 +1,34 @@
 |image0| |image1|
 
-A python util to fetch datasets from the LIBSVM website.
+A python util to fetch datasets from different databases.
 
+Currently supported databases are:
+
+- LIBSVM (libsvm_)
 
 Getting design matrix and target variable is as easy as:
 
 ::
 
-    from libsvmdata import fetch_libsvm
-    X, y = fetch_libsvm("news20.binary")
+    from libsvmdata import fetch_dataset
+    X, y = fetch_dataset("news20.binary")
 
+Currently supported datasets are in ``libsvmdata.supported`` and can be displayed as: 
 
-Currently supported datasets are in ``libsvmdata.supported``.
+::
 
+   from libsvmdata import print_supported_datasets
+   print_supported_datasets()
 
-The datasets are saved in a subfolder ``libsvm`` inside ``libsvmdata.datasets.DATA_HOME``, whose value is:
+There is no need to specify the database name.
 
-- the environment variable LIBSVMDATA_HOME if it exists,
+Files are saved under ``DATA_HOME/<database_name>``, where the value of ``DATA_HOME`` is:
 
-- else, the environment variable XDG_DATA_HOME if it exists,
+- the environment variable ``LIBSVMDATA_HOME`` if it exists,
 
-- else, $HOME/data.
+- else, the environment variable ``XDG_DATA_HOME`` if it exists,
+
+- else, ``$HOME/data``.
 
 
 
@@ -28,3 +36,4 @@ The datasets are saved in a subfolder ``libsvm`` inside ``libsvmdata.datasets.DA
    :target: https://github.com/mathurinm/libsvmdata/actions/workflows/build.yml
 .. |image1| image:: https://codecov.io/gh/mathurinm/libsvmdata/branch/main/graphs/badge.svg?branch=main
    :target: https://codecov.io/gh/mathurinm/libsvmdata
+.. _libsvm: https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/

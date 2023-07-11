@@ -2,7 +2,7 @@ import os
 from setuptools.command.build_ext import build_ext
 from setuptools import dist, setup, Extension, find_packages
 
-descr = 'Fetcher for LIBSVM datasets'
+descr = 'Fetcher for datasets'
 
 version = None
 with open(os.path.join('libsvmdata', '__init__.py'), 'r') as fid:
