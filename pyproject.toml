@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libsvmdata"
+dynamic = ["version"]
+description = "Fetcher for datasets"
+authors = [{ name = "Mathurin Massias", email = "mathurin.massias@gmail.com" }]
+maintainers = [
+    { name = "Mathurin Massias", email = "mathurin.massias@gmail.com" },
+]
+readme = "README.rst"
+license = { text = "BSD (3-clause)" }
+requires-python = ">=3.6"
+dependencies = ["download", "numpy>=1.12", "scikit-learn", "scipy"]
+
+[project.urls]
+"Download" = "https://github.com/mathurinm/libsvmdata.git"
+
+[tool.setuptools]
+packages = ["libsvmdata"]
+dynamic = {version = {attr = "libsvmdata.__version__"}}
+
+[tool.flake8]
+exclude = "__init__.py"
