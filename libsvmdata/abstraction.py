@@ -14,12 +14,14 @@ def _get_data_home(subdir_name=""):
     seek for the variable $XDG_DATA_HOME. Finally, the fallback is $HOME/data.
     """
     data_home = os.environ.get("LIBSVMDATA_HOME", None)
+
     if data_home is None:
         data_home = os.environ.get("XDG_DATA_HOME", None)
     if data_home is None:
         data_home = Path.home() / "data"
     else:
         data_home = Path(data_home)
+
     return data_home / subdir_name if subdir_name else data_home
 
 
