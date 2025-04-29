@@ -22,7 +22,7 @@ def _get_data_home(subdir_name=""):
     else:
         data_home = Path(data_home)
 
-    return data_home / subdir_name if subdir_name else data_home
+    return data_home / subdir_name
 
 
 class AbstractDataset(ABC):
