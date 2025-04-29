@@ -18,7 +18,9 @@ def _get_data_home(subdir_name=""):
         data_home = os.environ.get("XDG_DATA_HOME", None)
     if data_home is None:
         data_home = Path.home() / "data"
-    return data_home / subdir_name
+    else:
+        data_home = Path(data_home)
+    return data_home / subdir_name if subdir_name else data_home
 
 
 class AbstractDataset(ABC):
