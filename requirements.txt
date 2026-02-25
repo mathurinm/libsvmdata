@@ -1,4 +1,0 @@
-download
-numpy
-scikit-learn
-scipy
